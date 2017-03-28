@@ -23,67 +23,69 @@ public class Config {
 			+ "FROM sale ;",
 			
 			//고격별 판매조회
-			"create view vw_client_sale as "
-			+ "select cl.clnt_code,cl.clnt_name, "
-			+ "sw.sw_name, s.sale_amount, s.isdeposit, s.sale_price,"
-			+ "/*매출금*/    sd.total_sale_price,"
-			+ "/*미수금*/   sd.receivablePrice   "
-			+ " FROM client cl JOIN sale s ON cl.clnt_code = s.clnt_code                "
-			+ "JOIN software sw ON s.sw_code = sw.sw_code               "
-			+ " JOIN view_sale_detail sd ON sd.sale_code = s.sale_code;" ,
+			"CREATE VIEW view_client_sale AS "
+			+ "SELECT cl.clnt_code,cl.clnt_name, sw.sw_name, s.sale_amount, s.isdeposit, s.sale_price,"
+			+ "/*매출금*/	sd.total_sale_price, "
+			+ "/*미수금*/	sd.receivablePrice 	"
+			+ "FROM client cl JOIN sale s ON cl.clnt_code = s.clnt_code 				   "
+			+ "JOIN software sw ON s.sw_code = sw.sw_code 				   "
+			+ "JOIN view_sale_detail sd ON sd.sale_code = s.sale_code;  ",
 			
 			//소프트웨어별 판매조회
-			"create view vw_sw_sale as "
-			+ "SELECT  distinct sw.sw_code,sw.sw_name, c.group_name , su.comp_name,"
-			+ "/*공급금액*/ (vs.total_supply_price) total_supply_price,"
-			+ "/*판매금액*/ (vs.total_sale_price) total_price,"
-			+ "/*판매이윤*/ (vs.margin) margin  "
-			+ " FROM sale s    join view_sale_detail vs on s.sale_code= vs.sale_code    "
-			+ "join software sw on s.sw_code= sw.sw_code    "
-			+ "join category c on c.group_code= sw.group_code    "
-			+ "join delivery d on d.sw_code= sw.sw_code    "
-			+ "join supply_company su on d.comp_code= su.comp_code;",
+			"CREATE VIEW view_sw_sale AS "
+			+ "SELECT DISTINCT s.sale_code, s.sw_code, sw.sw_name, c.group_name, sc.comp_name,"
+			+ "/*공급금액*/ (sd.total_supply_price) total_supply_price, "
+			+ "/*판매금액*/ (sd.total_sale_price) total_price, "
+			+ "/*판매이윤*/ (sd.margin) margin  	"
+			+ "FROM sale s JOIN view_sale_detail sd ON s.sale_code= sd.sale_code    				"
+			+ "JOIN software sw ON s.sw_code= sw.sw_code 				"
+			+ "JOIN category c ON c.group_code= sw.group_code 				"
+			+ "JOIN delivery del ON del.sw_code= sw.sw_code 				"
+			+ "JOIN supply_company sc ON del.comp_code= sc.comp_code;",
 			
 			//날짜별 판매현황조회
-			"create view vw_day_sale as "
-			+ "SELECT s.order_date, s.sale_code, cl.clnt_name, sw.sw_name, s.sale_amount, s.isdeposit   "
-			+ "FROM sale s JOIN client cl ON s.clnt_code = cl.clnt_code JOIN software sw ON s.sw_code = sw.sw_code;",
+			"CREATE VIEW view_sale_by_orderdate AS "
+			+ "SELECT s.order_date, s.sale_code, cl.clnt_name, sw.sw_name, s.sale_amount, s.isdeposit	F"
+			+ "ROM sale s JOIN client cl ON s.clnt_code = cl.clnt_code    				"
+			+ "JOIN software sw ON s.sw_code = sw.sw_code;",
 			
 			//카테고리별 판매현황조회
-			"create view vw_category_sale as "
-			+ "SELECT c.group_name,"
+			"CREATE VIEW view_sale_by_category AS "
+			+ "SELECT c.group_code, c.group_name,"
 			+ "/*총판매가격*/   SUM(sd.total_sale_price) c_salePrice, "
-			+ "/*총판매수량*/   SUM(s.sale_amount) c_amount   "
+			+ "/*총판매수량*/   SUM(s.sale_amount) c_amount    "
 			+ "FROM category c JOIN software sw ON c.group_code= sw.group_code                "
 			+ "JOIN sale s ON sw.sw_code=s.sw_code                "
 			+ "JOIN view_sale_detail sd ON sd.sale_code = s.sale_code    "
-			+ "GROUP BY c.group_name; " ,
+			+ "GROUP BY c.group_name;",
 			
 			//sw전체 판매현황 보고서
-			"create view vw_all_sale_report as "
-			+ "SELECT s.order_date, c.group_name, sw.sw_name, s.sale_code, sale_amount,"
-			+ "/*총 판매금액*/   sd.total_sale_price   "
-			+ "FROM sale s JOIN software sw ON s.sw_code=sw.sw_code             "
-			+ "JOIN category c ON sw.group_code= c.group_code              "
-			+ "JOIN view_sale_detail sd ON sd.sale_code = s.sale_code     "
+			"CREATE VIEW view_sale_report AS "
+			+ "SELECT s.order_date, c.group_name, sw.sw_name, s.sale_code, sale_amount, "
+			+ "/*총 판매금액*/ sd.total_sale_price	"
+			+ "FROM sale s JOIN software sw ON s.sw_code=sw.sw_code             	"
+			+ "JOIN category c ON sw.group_code= c.group_code             	"
+			+ "JOIN view_sale_detail sd ON sd.sale_code = s.sale_code 	"
 			+ "ORDER BY s.order_date DESC;",
 			
 			//거래명세서 
-			"create view vw_trade_list as "
-			+ "SELECT distinct sd.sale_code,comp_name, s.order_date, c.clnt_name, sw.sw_name, s.sale_price, s.sale_amount,"
-			+ "/*총판매금액*/   sd.total_sale_price, "
-			+ "/*세금*/      sd.tax,  "
-			+ "/*총납품금액*/   sd.tax_saleprice    "
-			+ "FROM supply_company su JOIN delivery dl ON su.comp_code = dl.comp_code                      "
-			+ "JOIN software sw ON dl.sw_code   = sw.sw_code                      "
-			+ "JOIN sale s       ON sw.sw_code   = s.sw_code                      "
-			+ "JOIN client c    ON s.clnt_code  = c.clnt_code                         "
+			"CREATE VIEW view_bill_list AS "
+			+ "SELECT DISTINCT s.sale_code, sc.comp_name, s.order_date, c.clnt_name, sw.sw_name, s.sale_price, s.sale_amount,"
+			+ "/*총판매금액*/  sd.total_sale_price, "
+			+ "/*세금*/        sd.tax,"
+			+ "/*총납품금액*/  sd.tax_saleprice "
+			+ "	FROM supply_company sc JOIN delivery del ON sc.comp_code = del.comp_code 	                       "
+			+ "JOIN software sw ON del.sw_code = sw.sw_code 	                       "
+			+ "JOIN sale s ON sw.sw_code = s.sw_code                      	   "
+			+ "JOIN client c ON s.clnt_code = c.clnt_code                      	   "
 			+ "JOIN view_sale_detail sd ON sd.sale_code = s.sale_code;",
 			
 			//그래프 출력
 			
-			"create view vw_sale_graph as SELECT c.clnt_name, SUM(sale_amount)   "
-			+ " FROM sale s JOIN client c ON s.clnt_code=c.clnt_code GROUP BY c.clnt_name;"			
+			"CREATE VIEW view_sale_graph AS "
+			+ "SELECT c.clnt_name, SUM(sale_amount) 	"
+			+ "FROM sale s JOIN client c ON s.clnt_code=c.clnt_code "
+			+ "GROUP BY c.clnt_name;"	
 	};
 	
 	public static final String[] CREATE_SQL_TABLE={
