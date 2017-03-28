@@ -34,7 +34,7 @@ public class Config {
 			
 			//소프트웨어별 판매조회
 			"create view vw_sw_sale as "
-			+ "SELECT  distinct s.sale_code,sw.sw_code,sw.sw_name, c.group_name , su.comp_name,"
+			+ "SELECT  distinct sw.sw_code,sw.sw_name, c.group_name , su.comp_name,"
 			+ "/*공급금액*/ (vs.total_supply_price) total_supply_price,"
 			+ "/*판매금액*/ (vs.total_sale_price) total_price,"
 			+ "/*판매이윤*/ (vs.margin) margin  "
