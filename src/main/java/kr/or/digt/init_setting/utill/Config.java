@@ -13,7 +13,7 @@ public class Config {
 	public static final String[] CREATE_VIEW={
 			//sale계산뷰
 			" CREATE VIEW view_sale_detail AS   "
-			+ "SELECT sale_code,sw_code,"
+			+ "SELECT sale_code, "
 			+ "/*총판매금액*/   sale_price * sale_amount AS total_sale_price, "
 			+ "/*총공급금액*/   supply_price * sale_amount AS total_supply_price,"
 			+ " /*마진액*/      (sale_price * sale_amount) - (supply_price*sale_amount) AS margin,  "
@@ -34,7 +34,7 @@ public class Config {
 			
 			//소프트웨어별 판매조회
 			"create view vw_sw_sale as "
-			+ "SELECT  distinct s.sale_code,sw.sw_name, c.group_name , su.comp_name,"
+			+ "SELECT  distinct s.sale_code,sw.sw_code,sw.sw_name, c.group_name , su.comp_name,"
 			+ "/*공급금액*/ (vs.total_supply_price) total_supply_price,"
 			+ "/*판매금액*/ (vs.total_sale_price) total_price,"
 			+ "/*판매이윤*/ (vs.margin) margin  "
