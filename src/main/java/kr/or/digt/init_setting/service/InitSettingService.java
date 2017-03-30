@@ -21,6 +21,7 @@ public class InitSettingService {
 			dao.getUpdateResult("use " + Config.DB_NAME);
 			
 			for(int i=0;i<Config.CREATE_SQL_TABLE.length;i++){
+				System.out.println(Config.TABLE_NAME[i]+"생성완료");
 				dao.getUpdateResult(Config.CREATE_SQL_TABLE[i]);
 			}
 			
