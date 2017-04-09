@@ -111,53 +111,47 @@ public class Config {
 		public static final String[] CRETE_TRIGER={      
 				// 납품 테이블 입력시 수량조정
 
-				
-				 "CREATE TRIGGER tri_software_after_insert_delivery   "
-				+ " AFTER insert ON delivery    "
-				+ "FOR EACH ROW BEGIN     "
-				+ "IF NEW.del_isExist = false THEN        "
-				+ "update software set sw_inven = sw_inven+new.supply_amount          "
-				+ "where sw_code= new.sw_code;     "
-				+ "END IF; "
-				+ "end;  ",
-				
+				"CREATE TRIGGER tri_software_after_insert_delivery	"
+				+ "AFTER INSERT ON delivery 	"
+				+ "FOR EACH ROW BEGIN	"
+				+ "IF NEW.del_isExist = true THEN 		"
+				+ "UPDATE software SET sw_inven = sw_inven + NEW.supply_amount		"
+				+ "WHERE sw_code = NEW.sw_code;    "
+				+ "END IF;"
+				+ "END",
+			
 				
 				// 납품테이블 업데이트시 수량조정
-	
 				
-				"CREATE TRIGGER tri_software_after_update_delivery    "
-				+ "AFTER update ON delivery     "
+				"CREATE TRIGGER tri_software_after_update_delivery   "
+				+ " AFTER update ON delivery     "
 				+ "FOR EACH ROW BEGIN 	"
-				+ "IF NEW.del_isExist = FALSE THEN  		"
-				+ "UPDATE software SET sw_inven = sw_inven - NEW.supply_amount 		"
-				+ "WHERE sw_code= NEW.sw_code;		"
-				+ "END IF;"
-				+ "END;",
-				
+				+ "IF NEW.del_isExist = FALSE THEN		"
+				+ "UPDATE software SET sw_inven = sw_inven - NEW.supply_amount		"
+				+ "WHERE sw_code= NEW.sw_code;"
+				+ "	END IF;"
+				+ "END ",
 				
 				// 판메테이블 입력시 수량조절
 				
-			
-				 "CREATE TRIGGER tri_software_after_insert_sale    "
-				+ "AFTER insert  ON sale    "
-				+ "FOR EACH ROW  BEGIN   "
-				+ " IF NEW.sale_isExist = true THEN       "
-				+ " update software set sw_inven = sw_inven-new.sale_amount           "
-				+ "where sw_code= new.sw_code;       "
-				+ "END IF;  "
-				+ "end;  ",
-				
+				"CREATE TRIGGER tri_software_after_insert_sale    "
+				+ "AFTER insert    ON sale    "
+				+ "FOR EACH ROW BEGIN	"
+				+ "IF NEW.sale_isExist = TRUE THEN		"
+				+ "UPDATE software SET sw_inven = sw_inven - NEW.sale_amount		"
+				+ "WHERE sw_code= NEW.sw_code;	"
+				+ "END IF ;"
+				+ "END",
 				
 				//판매테이블 업데이트시 수량조절
 				
-				 "CREATE TRIGGER tri_software_after_update_sale    "
-				+ "AFTER update     ON sale    "
-				+ "FOR EACH ROW BEGIN   "
-				+ "IF  NEW.sale_isExist = false then       "
-				+ " update software set sw_inven = sw_inven+new.sale_amount         "
-				+ " where sw_code= new.sw_code;        "
-				+ " END IF; "
-				+ "end; "
+				"CREATE TRIGGER tri_software_after_update_sale	"
+				+ "AFTER UPDATE ON sale 	"
+				+ "FOR EACH ROW BEGIN	IF NEW.sale_isExist = FALSE THEN		"
+				+ "UPDATE software SET sw_inven = sw_inven + NEW.sale_amount		"
+				+ "WHERE sw_code = NEW.sw_code;   "
+				+ " END IF;"
+				+ "END "
 			
 				
 		};
