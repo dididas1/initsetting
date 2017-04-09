@@ -165,9 +165,9 @@ public class Config {
 	
 	
 
-		/*public static final String[] CREATE_INDEX={
+		public static final String[] CREATE_INDEX={
 			"CREATE INDEX idx_post_sido On adress(sido)",
 			"CREATE INDEX idx_post_doro ON adress(doro)"};
-		*/
+		
 		
 }
