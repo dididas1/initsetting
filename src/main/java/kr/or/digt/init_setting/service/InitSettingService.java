@@ -22,6 +22,7 @@ public class InitSettingService {
 			
 			for(int i=0;i<Config.CREATE_SQL_TABLE.length;i++){
 				dao.getUpdateResult(Config.CREATE_SQL_TABLE[i]);
+				System.out.println(Config.TABLE_NAME[i]+"Table 생성완료");
 			}
 			
 			for(int i=0;i<Config.CRETE_TRIGER.length;i++){
@@ -54,7 +55,7 @@ public class InitSettingService {
 	
 	
 
-	private void createIndex() {
+	/*private void createIndex() {
 		System.out.printf("Index 생성 중 ~~!%n");
 		for (int i = 0; i < Config.CREATE_INDEX.length; i++) {
 			try {
@@ -64,7 +65,7 @@ public class InitSettingService {
 			}
 		}	
 		System.out.printf("Index 생성 완료 ~~!%n");
-	}
+	}*/
 	
 	protected void executeImportData(String sql, String tableName) {
 		Statement stmt = null;
