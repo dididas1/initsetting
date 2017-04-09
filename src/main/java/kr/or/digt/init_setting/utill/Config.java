@@ -130,9 +130,7 @@ public class Config {
 				+ "FOR EACH ROW BEGIN 	"
 				+ "IF NEW.del_isExist = FALSE THEN  		"
 				+ "UPDATE software SET sw_inven = sw_inven - NEW.supply_amount 		"
-				+ "WHERE sw_code= NEW.sw_code; 	ELSEIF NEW.del_isExist = TRUE THEN  		"
-				+ "UPDATE software SET sw_inven = sw_inven+new.supply_amount         "
-				+ "WHERE sw_code = NEW.sw_code; 	"
+				+ "WHERE sw_code= NEW.sw_code;		"
 				+ "END IF;"
 				+ "END;",
 				
