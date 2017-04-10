@@ -22,22 +22,24 @@ public class InitSettingService {
 			
 			for(int i=0;i<Config.CREATE_SQL_TABLE.length;i++){
 				dao.getUpdateResult(Config.CREATE_SQL_TABLE[i]);
-				System.out.println(Config.TABLE_NAME[i]+"Table 생성완료");
+				System.err.println(Config.TABLE_NAME[i]+"Table 생성완료");
 			}
 			
-			for(int i=0;i<Config.CRETE_TRIGGER.length;i++){
-				dao.getUpdateResult(Config.CRETE_TRIGGER[i]);
-				System.out.println("Trigger 생성완료");
-				
-			}
 			for(int i=0;i<Config.CREATE_VIEW.length;i++){
 				dao.getUpdateResult(Config.CREATE_VIEW[i]);
 				System.out.println("View 생성완료");
 			}
 			
+			for(int i=0;i<Config.CRETE_TRIGGER.length;i++){
+				dao.getUpdateResult(Config.CRETE_TRIGGER[i]);
+				System.err.println("Trigger 생성완료");
+				
+			}
+			
+			
 			for(int i=0;i<Config.CREATE_MEMBER.length;i++){
 				dao.getUpdateResult(Config.CREATE_MEMBER[i]);
-				System.err.println("User 생성완료");
+				System.out.println("User 생성완료");
 			}
 			
 			/*loadPostData();
