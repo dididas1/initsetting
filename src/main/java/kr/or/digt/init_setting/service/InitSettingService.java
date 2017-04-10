@@ -25,12 +25,14 @@ public class InitSettingService {
 				System.out.println(Config.TABLE_NAME[i]+"Table 생성완료");
 			}
 			
-			for(int i=0;i<Config.CRETE_TRIGER.length;i++){
-				dao.getUpdateResult(Config.CRETE_TRIGER[i]);
+			for(int i=0;i<Config.CRETE_TRIGGER.length;i++){
+				dao.getUpdateResult(Config.CRETE_TRIGGER[i]);
+				System.out.println("Trigger 생성완료");
 				
 			}
 			for(int i=0;i<Config.CREATE_VIEW.length;i++){
 				dao.getUpdateResult(Config.CREATE_VIEW[i]);
+				System.out.println("View 생성완료");
 			}
 			
 			/*loadPostData();
