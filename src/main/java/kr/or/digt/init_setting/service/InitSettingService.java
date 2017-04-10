@@ -35,6 +35,11 @@ public class InitSettingService {
 				System.out.println("View 생성완료");
 			}
 			
+			for(int i=0;i<Config.CREATE_MEMBER.length;i++){
+				dao.getUpdateResult(Config.CREATE_MEMBER[i]);
+				System.err.println("User 생성완료");
+			}
+			
 			/*loadPostData();
 			createIndex();*/
 			JOptionPane.showMessageDialog(null, "초기화 완료");
